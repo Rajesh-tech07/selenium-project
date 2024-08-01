@@ -13,7 +13,7 @@ public class testCase_05 extends BaseClass {
 		register_user ru = new register_user(driver);
 		ru.login();
 		
-		ru.signup_details(file.readconfig("name"), file.readconfig("email"));
-		ru.reg_error();
+		ru.signup_details(file.readconfig("name"), file.readconfig("email"), file.readconfig("password"));
+		ru.reg_error(file.readconfig("email"), file.readconfig("password"));
 	}
 }

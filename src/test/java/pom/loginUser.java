@@ -1,5 +1,7 @@
 package pom;
 
+import static org.testng.Assert.assertTrue;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,8 +43,8 @@ public class loginUser {
 		
 			email.sendKeys(email_id);
 			password.sendKeys(pass);
-			loginCTA.click();		
-	
+			loginCTA.click();
+			
 	}
 	
 	public void logout(WebDriver driver) 
@@ -60,4 +62,11 @@ public class loginUser {
 	{
 		s.assertEquals(login_error.getText(), "Your email or password is incorrect!");
 	}
+
+	public void login_verification( String name) 
+	{
+		assertTrue(login_as.getText().contains(name));
+	}
+	
+	
 }

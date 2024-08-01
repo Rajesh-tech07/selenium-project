@@ -14,7 +14,7 @@ public class testcase_01 extends BaseClass{
 	{
 		register_user ru = new register_user(driver);
 		ru.login();
-		ru.signup_details(file.readconfig("name"),file.readconfig("email"));
+		ru.signup_details(file.readconfig("name"),file.readconfig("email"), file.readconfig("password"));
 		ru.acc_inof(file.readconfig("date"), file.readconfig("month"), file.readconfig("year"), file.readconfig("password"));
 		ru.address_info(file.readconfig("firstname"), 
 				file.readconfig("lastname"), file.readconfig("companyname"),
@@ -22,6 +22,6 @@ public class testcase_01 extends BaseClass{
 				file.readconfig("country"), file.readconfig("State"),
 				file.readconfig("city"), file.readconfig("Zipcode"),
 				file.readconfig("mobilenumber"));
-		ru.delete_account();
+		ru.delete_account(file.readconfig("name"), file.readconfig("email"), file.readconfig("password"));
 	}
 }

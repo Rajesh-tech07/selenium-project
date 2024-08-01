@@ -4,20 +4,22 @@ import org.testng.annotations.Test;
 
 import BaseClass.BaseClass;
 import pom.cart;
+import pom.product_details;
 import pom.products;
 
-public class testcase_12 extends BaseClass {
+public class testcase_13 extends BaseClass{
 
 	@Test
-	public void testcase_no12() throws InterruptedException 
+	public void testcaseno_13() throws InterruptedException
 	{
-		
 		products p = new products(driver);
 		p.product_menu(driver);
 		
 		cart c= new cart(driver);
-		c.addToCart(driver);
+		c.add_qty_cart(driver);
+		
+		product_details pd= new product_details(driver);
+		pd.details_page(driver);
 		
 	}
-
 }

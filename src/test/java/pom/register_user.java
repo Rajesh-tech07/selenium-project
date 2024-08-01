@@ -1,10 +1,13 @@
 package pom;
 
+import static org.testng.Assert.assertTrue;
+
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.asserts.SoftAssert;
 
 import BaseClass.BaseClass;
@@ -24,6 +27,9 @@ public class register_user extends BaseClass {
 	@FindBy(xpath ="(//input[@name='email'])[2]")
 	private WebElement email;
 	
+	@FindBy(xpath ="(//input[@name='email'])[1]")
+	private WebElement login_email;
+	
 	@FindBy(xpath="//button[contains(text(),\"Signup\")]")
 	private WebElement singupbtn;
 	
@@ -33,7 +39,7 @@ public class register_user extends BaseClass {
 	@FindBy(id="uniform-id_gender1")
 	private WebElement gender_radio_btn;
 	
-	@FindBy(id="password")
+	@FindBy(name="password")
 	private WebElement password;
 	
 	@FindBy(id="days")
@@ -102,6 +108,15 @@ public class register_user extends BaseClass {
 	@FindBy(xpath="//p[contains(text(),'Email')]")
 	private WebElement error;
 	
+	@FindBy(xpath="//h2[@class=\"title text-center\"]")
+	private WebElement successmessage;
+	
+	@FindBy(id="address_delivery")
+	private List< WebElement> delivery_address;
+	
+	@FindBy(xpath="//button[text()='Login']")
+	private WebElement loginCTA;
+	
 	public register_user(WebDriver driver) 
 	{
 		PageFactory.initElements(driver, this);
@@ -112,11 +127,21 @@ public class register_user extends BaseClass {
 		singup_login.click();
 	}
 	
-	public void signup_details(String username, String useremail) 
+	public void signup_details(String username, String useremail, String pass) 
 	{
 		name.sendKeys(username);
 		email.sendKeys(useremail);
 		singupbtn.click(); 
+		
+		try 
+		{
+			delete_account(username, useremail, pass);
+		}
+		catch(Exception e)
+		{
+			System.out.println();
+		}
+		
 	}
 	
 	public void acc_inof(String date, String month, String year,String Password ) throws InterruptedException 
@@ -155,20 +180,54 @@ public class register_user extends BaseClass {
 		
 	}
 	
-	public void delete_account() 
+	public void delete_account(String name, String email_id, String pass) 
 	{
-		if(account_created.isDisplayed())
+		try
+	//	if(account_created.isDisplayed()) 
+		{
+			account_created.isDisplayed();
 			continue_cta.click();
-		if(login_as.isDisplayed())
-			System.out.print(login_as.getText());
-		delete_acc.click();	
+			assertTrue(login_as.getText().contains(name));
+		}	
+		//else
+		catch(Exception e)
+		{
+			try
+			{
+				reg_error(email_id, pass);
+				if(login_as.isDisplayed())
+					System.out.print(login_as.getText());
+				delete_acc.click();	
+				
+				if(deleteText.isDisplayed())
+					continue_cta.click();
+			}
+			catch(Exception e2)
+			{
+				delete_acc.click();	
+				
+				if(deleteText.isDisplayed())
+					continue_cta.click();
+			}
+		}
 		
-		if(deleteText.isDisplayed())
-			continue_cta.click();
 	}
 	
-	public void reg_error() 
+	public void reg_error(String email_id, String pass) 
 	{
 		s.assertEquals(error.getText(), "Email Address already exist!");
+		login_email.sendKeys(email_id);
+		password.sendKeys(pass);
+		loginCTA.click();
+	}
+	
+	
+	public void delivery_infor() 
+	{
+		for(WebElement address:delivery_address)
+		{
+			System.out.println(address.getText());
+		}
+		
 	}
 }

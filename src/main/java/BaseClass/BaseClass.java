@@ -19,24 +19,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class BaseClass {
 
 	public config file = new config(); ;
 	public static WebDriver driver;
-	@SuppressWarnings("deprecation")
+	
 	@BeforeTest
 	public void launch() 
 	{
 		WebDriverManager.chromedriver().setup();
 		driver =new ChromeDriver();
-		 ChromeOptions options = new ChromeOptions();
-	        options.addArguments("--disable-blink-features=AutomationControlled");
-
-	        // Initialize ChromeDriver
-	        ChromeDriver driver = new ChromeDriver(options);
-
-	        // Initialize DevTools and create a session
+		
+//		 String script = "var ads = document.querySelectorAll('iframe[src*=\"google\"], .adsbygoogle');" +
+//                 "ads.forEach(function(ad) { ad.remove(); });";
+//		 ((JavascriptExecutor) driver).executeScript(script);
+//		 ChromeOptions options = new ChromeOptions();
+//	        options.addArguments("--disable-blink-features=AutomationControlled");
+//
+//	        // Initialize ChromeDriver
+//	        ChromeDriver driver = new ChromeDriver(options);
+//
+//	        // Initialize DevTools and create a session
 //	        DevTools devTools = driver.getDevTools();
 //	        devTools.createSession();
 //
